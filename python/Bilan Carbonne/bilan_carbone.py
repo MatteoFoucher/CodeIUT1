@@ -963,7 +963,20 @@ def plus_longue_periode_emmissions_decroissantes(liste_activites):
     Returns:
         int: la longueur de la plus longue suite d'emmissions décroissantes
     """
-    
+    periode_act = 0
+    periode_max = 0
+    if liste_activites == []:
+        return periode_max
+    for i in range(1, len(liste_activites)):
+        if liste_activites[i][2] < liste_activites[i-1][2]:
+            periode_act += 1
+        else:
+            if periode_act > periode_max:
+                periode_max = periode_act
+            periode_act = 0
+    if periode_act > periode_max:
+        periode_max = periode_act
+    return periode_max
     
 def est_bien_triee(liste_activites):
     """
