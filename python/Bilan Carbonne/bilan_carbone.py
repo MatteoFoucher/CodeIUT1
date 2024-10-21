@@ -963,7 +963,7 @@ def plus_longue_periode_emmissions_decroissantes(liste_activites):
     Returns:
         int: la longueur de la plus longue suite d'emmissions décroissantes
     """
-    ...
+    
     
 def est_bien_triee(liste_activites):
     """
