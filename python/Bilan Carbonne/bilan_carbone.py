@@ -1173,7 +1173,18 @@ def temps_activite(activite, co2_minute):
     Returns:
         float: la durée de l'activité en minutes
     """
-    ...
+    duree = 0
+    get_type = None
+    liste_types = ["type1", "type2", "type3", "type4"]
+    if activite[3] not in liste_types:
+        return None
+    else:
+        get_type = activite[3]
+        duree = co2_minute[get_type]
+        duree = activite[2]/duree
+    return duree
+print(temps_activite(('Lucas', '2024-09-01', 67.2, 'type3'), co2_minute))   
+    
     
 def cumul_temps_activite(liste_activites, co2_minute):
     """
