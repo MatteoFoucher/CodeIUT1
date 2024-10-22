@@ -1183,7 +1183,7 @@ def temps_activite(activite, co2_minute):
         duree = co2_minute[get_type]
         duree = activite[2]/duree
     return duree
-print(temps_activite(('Lucas', '2024-09-01', 67.2, 'type3'), co2_minute))   
+#print(temps_activite(('Lucas', '2024-09-01', 67.2, 'type3'), co2_minute))   
     
     
 def cumul_temps_activite(liste_activites, co2_minute):
@@ -1196,4 +1196,14 @@ def cumul_temps_activite(liste_activites, co2_minute):
     Returns:
         int: le temps total passé à réaliser des activités
     """
-    ...
+    duree = 0
+    duree_totale = 0 
+    get_type = None
+    for i in range(len(liste_activites)):
+        get_type = liste_activites[i][3]
+        duree = co2_minute[get_type]
+        duree = liste_activites[i][2]/duree
+        duree_totale += duree
+        duree = 0
+    return duree_totale
+print(cumul_temps_activite(liste2, co2_minute))
