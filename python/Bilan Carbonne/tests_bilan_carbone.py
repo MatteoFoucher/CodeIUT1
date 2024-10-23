@@ -12,10 +12,20 @@ import bilan_carbone as bc
 def test_est_avant():
     assert bc.est_avant(('Lucas', '2024-09-01', 67.2, 'type3'), ('Lucas', '2024-09-01', 67.2, 'type4')) == True
     assert bc.est_avant(('Lucas', '2024-09-01', 67.2, 'type4'), ('Lucas', '2024-09-01', 67.2, 'type3')) == False
+    assert bc.est_avant(('Lucas', '2024-09-01', 67.2, 'type4'), ('Erika', '2024-09-01', 67.2, 'type4')) == False
+    assert bc.est_avant(('Erika', '2024-09-01', 67.2, 'type4'), ('Lucas', '2024-09-01', 67.2, 'type4')) == True
+    assert bc.est_avant(('Lucas', '2024-09-10', 67.2, 'type4'), ('Lucas', '2024-09-01', 67.2, 'type4')) == False
+    assert bc.est_avant(('Lucas', '2024-09-01', 67.2, 'type4'), ('Lucas', '2024-09-10', 67.2, 'type4')) == True
+    assert bc.est_avant(('Lucas', '2024-09-01', 67.2, 'type4'), ('Lucas', '2024-09-01', 67.2, 'type3')) == False
+    assert bc.est_avant((), ('Lucas', '2024-09-01', 67.2, 'type4')) == None
+    assert bc.est_avant(('Lucas', '2024-09-01', 67.2, 'type4'), ()) == None
+    assert bc.est_avant((),()) == None
+
 
 def test_annee():
     assert bc.annee(('Lucas', '2024-09-01', 67.2, 'type3')) == '2024'
     assert bc.annee(('Lucas', '1999-12-27', 70.08, 'type3')) == '1999'
+
 
 def test_annee_mois():
     assert bc.annee_mois(('Lucas', '2024-10-01', 67.2, 'type3')) == '2024-10'
