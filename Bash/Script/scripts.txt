@@ -60,5 +60,3 @@ do
         echo $fichier
         fi
 done
-
-bleh
