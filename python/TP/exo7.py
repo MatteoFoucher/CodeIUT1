@@ -46,6 +46,5 @@ def Sanction_Vitesse(ExesVit, limite):
     return amende, nb_Pts, Susp_Permis 
     
 print(Sanction_Vitesse(60,50))
-    
 
     
