@@ -1,6 +1,11 @@
 """ TP7 une application complète
     ATTENTION VOUS DEVEZ METTRE DES DOCSTRING A TOUTES VOS FONCTIONS
 """
+liste_options = ["Charger un fichier",
+                     "Rechercher la population d'une commune",
+                     "Afficher la population d'un département", 
+                     "Quitter"]
+
 def afficher_menu(titre, liste_options):
     print("+-------------------------+")
     print("| MENU DE",titre, "|")
@@ -9,7 +14,6 @@ def afficher_menu(titre, liste_options):
     for i in range(len(liste_options)):
         print(cpt, " -> ", liste_options[cpt-1])
         cpt+=1
-    print("Entrez votre choix [1-4]:")
 #print(afficher_menu("BLEH",["Charger un fichier","Rechercher la population d'une commune","Afficher la population d'un département", "Quitter"]))
 
 
@@ -17,10 +21,25 @@ def afficher_menu(titre, liste_options):
 
 
 def demander_nombre(message, borne_max):
-    input
+    try:
+        rep = int(input(message + str(borne_max) + "]" + "\n"))
+        if rep <= borne_max:
+            return rep
+    except:
+        return None 
+    
+#print(demander_nombre("Entrez un nombre de [1-", len(liste_options)))
+   
+        
 
 def menu(titre, liste_options):
-    ...
+    try:
+        afficher_menu(titre, liste_options)
+        rep = demander_nombre("Entrez votre choix [1-", len(liste_options))
+        return rep
+    except:
+        return None
+#print(menu("Application", ["Charger un fichier","Rechercher la population d'une commune","Afficher la population d'un département", "Quitter"]))
 
 def programme_principal():
     liste_options = ["Charger un fichier",
@@ -78,4 +97,4 @@ def sauve_population_dpt(nom_fic, liste_pop_dep):
     ...
 
 # appel au programme principal
-#programme_principal()
+programme_principal()
