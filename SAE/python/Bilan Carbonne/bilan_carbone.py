@@ -943,9 +943,12 @@ def filtre(liste_activites, num_critere, val_critere):
     """
     liste_critère = []
     for i in range(len(liste_activites)):
+        if num_critere > len(liste_activites[i]):
+            return None
         if liste_activites[i][num_critere] == val_critere:
             liste_critère.append(liste_activites[i])
     return liste_critère
+#print(filtre(liste5, 5, "Hugo"))
 
 def cumul_emmissions(liste_activites):
     """
@@ -960,6 +963,8 @@ def cumul_emmissions(liste_activites):
     for i in range(len(liste_activites)):
         somme_emi += liste_activites[i][2]
     return somme_emi
+#print(cumul_emmissions(liste3))
+
 def plus_longue_periode_emmissions_decroissantes(liste_activites):
     """
     Retourne la longueur de la plus longue suite d'emmissions décroissantes dans une liste d'activités de même type, d'une même personne et ordonnée chronologiquement
@@ -983,7 +988,8 @@ def plus_longue_periode_emmissions_decroissantes(liste_activites):
     if periode_act > periode_max:
         periode_max = periode_act
     return periode_max
-    
+#print(plus_longue_periode_emmissions_decroissantes(liste6))
+
 def est_bien_triee(liste_activites):
     """
     Retourne True si une liste d'activités est bien triée, False sinon
@@ -1000,6 +1006,7 @@ def est_bien_triee(liste_activites):
         else:
             return False
     return res
+#print(est_bien_triee())
 
 def liste_des_types(liste_activites):
     """

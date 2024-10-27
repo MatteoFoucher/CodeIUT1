@@ -29,7 +29,7 @@ def demander_nombre(message, borne_max):
     except:
         return "Le nombre dépasse le maximum !"
     
-print(demander_nombre("Entrez un nombre de [1-", len(liste_options)))
+#print(demander_nombre("Entrez un nombre de [1-", len(liste_options)))
    
         
 
@@ -98,4 +98,4 @@ def sauve_population_dpt(nom_fic, liste_pop_dep):
     ...
 
 # appel au programme principal
-#programme_principal()
+programme_principal()
