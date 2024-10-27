@@ -872,7 +872,10 @@ def annee(activite):
     Returns:
         str: l'année de l'activité
     """
-    liste = activite[1].split("-")
+    if activite == () or activite[1] == '':
+        return None
+    else:
+        liste = activite[1].split("-")
     return liste[0]
 def annee_mois(activite):
     """
@@ -883,7 +886,10 @@ def annee_mois(activite):
     Returns:
         str: l'année et le mois de l'activité
     """
-    liste = activite[1].split("-")
+    if activite == () or activite[1] == '':
+        return None
+    else:
+        liste = activite[1].split("-")
     return liste[0]+"-"+liste[1]
 
 def max_emmission(liste_activites):
@@ -904,7 +910,7 @@ def max_emmission(liste_activites):
             max_emi = liste_activites[i][2]
             tuple_max_emi = liste_activites[i]
     return tuple_max_emi
-#print(max_emmission(liste1))
+#print(max_emmission(liste5))
 
 
 def filtre_par_prenom(liste_activites, prenom):
@@ -922,7 +928,7 @@ def filtre_par_prenom(liste_activites, prenom):
         if liste_activites[i][0] == prenom:
             liste_personne.append(liste_activites[i])
     return liste_personne
-#print(filtre_par_prenom(liste5, "Matéo"))
+#print(filtre_par_prenom(liste5, "Alix"))
 
 def filtre(liste_activites, num_critere, val_critere):
     """
