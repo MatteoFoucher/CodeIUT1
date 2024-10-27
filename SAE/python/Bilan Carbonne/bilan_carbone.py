@@ -1206,4 +1206,4 @@ def cumul_temps_activite(liste_activites, co2_minute):
         duree_totale += duree
         duree = 0
     return duree_totale
-print(cumul_temps_activite(liste2, co2_minute))
+#print(cumul_temps_activite(liste2, co2_minute))
