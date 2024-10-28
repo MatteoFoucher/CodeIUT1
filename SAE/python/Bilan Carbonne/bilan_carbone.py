@@ -1061,7 +1061,7 @@ def liste_des_personnes(liste_activites):
             liste_personnes.append(liste_activites[i][0])
             prenom = liste_activites[i][0]
     return liste_personnes
-#print(liste_des_personnes(liste5))
+#print(liste_des_personnes(liste6))
 
 def fusionner_activites(liste_activites1, liste_activites2):
     """

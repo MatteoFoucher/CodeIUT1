@@ -18,17 +18,23 @@ def charger_csv():
             print("Fichier chargé")
     return liste_fichier
 
-def affichage_menu_principal(titre):
+def menu(titre, liste_options):
+    try:
+        affichage_menu_principal(titre, liste_options)
+        rep = demander_nombre("Entrez votre choix [1-", len(liste_options))
+        return rep
+    except:
+        return None
+
+def affichage_menu_principal(titre, liste_option):
     print("+-----------------------------------------+")
     print("|Bienvenu sur l'application " + titre + "|")
-    print("+-----------------------------------------+")
-
-def affichage2_menu_principal(liste_option):
-    print("\n")
+    print("+-----------------------------------------+" + "\n")
     print("-----------------------+")
     print("Que voulez vous faire ?|")
     print("-----------------------+")
     choix_options(liste_option)
+    
 
 
 def choix_options(liste_options):
@@ -45,13 +51,13 @@ def demander_nombre(message, borne_max):
         if rep <= borne_max:
             return rep
     except:
-        return "Le nombre dépasse le maximum !"
+        return None
     
 def rechercher_une_personne(csv_to_list, liste_options_menu_Personne):
     Prenomexist = False
     while Prenomexist == False:
         try:
-            Prenom = input("Entrez le prénom de la personne que vous recherchez" + "\n")
+            Prenom = input("Entrez le prénom de la personne que vous recherchez : ")
             if Prenom in bc.liste_des_personnes(csv_to_list):
                 Prenomexist = True
                 return Prenom
@@ -60,9 +66,29 @@ def rechercher_une_personne(csv_to_list, liste_options_menu_Personne):
         except:
             print("je ne connais pas la personne que vous cherchez, veuillez réessayer")
 
-def affichage_menu_recherche_personne(Prenom2, liste_options):  
-    print("Que voulez vous savoir sur " + Prenom2 + " ?")
+def affichage_menu_recherche_personne(Prenom2, liste_options): 
+    print("---------------------------------------+") 
+    print("Que voulez vous savoir sur " + Prenom2 + " ?    |")
+    print("---------------------------------------+")
     choix_options(liste_options)
+
+def bilan_carbonne(Prenom, Prenom_csv_to_list):
+    print("\n")
+    print("-------------------------------------")
+    print(Prenom + " a émit au total " + str(bc.cumul_emmissions(Prenom_csv_to_list)) + " grammes de Co2" )
+    print("-------------------------------------")
+    print("\n")
+
+def plus_polluante(Prenom, Prenom_csv_to_list):
+    act_plus_polluante = bc.max_emmission(Prenom_csv_to_list)
+    print("-------------------------------------")
+    print("l'acivité la plus polluante de " + Prenom + " a émise " + str(act_plus_polluante[2]) + " grammes de Co2 le " + act_plus_polluante[1] + ", c'était une activité de " + act_plus_polluante[3] + "-------------------------------------" + "\n")
+
+def afficher_activite_totale_prenom(Prenom_csv_to_list, Prenom):
+    print("Voici la liste d'activité de " + Prenom + " :")
+    print(Prenom_csv_to_list)    
+
+
 
 # ici votre programme principal
 
@@ -70,64 +96,57 @@ def programme_principal():
     appli_running = True
     liste_options_menu = ["Rechercher Une personne", "Rechercher une date", "Rechercher un type d'activité", "Effectuer une recherche précise", "Quitter"]
     liste_options_menu_Personne = ["Son bilan carbonne", "Ses activités", "Son activité la plus polluante", "Chercher une autre personne", "retour"]
-    affichage_menu_principal("Bilan Carbonne")
     csv_to_list = charger_csv()
-    affichage2_menu_principal(liste_options_menu)
-    rep_menu_principal = demander_nombre("Entrez un nombre [1-", len(liste_options_menu))
     while appli_running:
-        if rep_menu_principal == '':
-            affichage_menu_principal("Bilan Carbonne")
-            affichage2_menu_principal(liste_options_menu)
-            rep_menu_principal = demander_nombre("Entrez un nombre [1-", len(liste_options_menu))
-                
-        if rep_menu_principal == 1:
-            recherche_personne_en_cours = True
-            Prenom = rechercher_une_personne(csv_to_list, liste_options_menu_Personne)
-            while recherche_personne_en_cours == True:
-                affichage_menu_recherche_personne(Prenom, liste_options_menu_Personne)
-                rep_recherhe_personne = demander_nombre("Entrez un nombre [1-", len(liste_options_menu_Personne))
-                try:
-                    if rep_recherhe_personne == 1:
-                        print("\n")
-                        print("-------------------------------------")
-                        print(Prenom + " a émit " + str(bc.cumul_emmissions(bc.filtre_par_prenom(csv_to_list, Prenom))) + " grammes de Co2" )
-                        print("-------------------------------------")
-                        print("\n")
+        rep_menu_principal = menu("Bilan carbonne", liste_options_menu)
+        try:
+            if rep_menu_principal is None:
+                print("cette option n'existe pas !")
+                    
+            elif rep_menu_principal == 1:
+                recherche_personne_en_cours = True
+                Prenom = rechercher_une_personne(csv_to_list, liste_options_menu_Personne)
+                Prenom_csv_to_list = bc.filtre_par_prenom(csv_to_list, Prenom)
+                while recherche_personne_en_cours == True:
+                    affichage_menu_recherche_personne(Prenom, liste_options_menu_Personne)
+                    rep_recherhe_personne = demander_nombre("Entrez un nombre [1-", len(liste_options_menu_Personne))
+                    try:
+                        if rep_recherhe_personne == 1:
+                            bilan_carbonne(Prenom, Prenom_csv_to_list)
+                    
+                        elif rep_recherhe_personne == 2:
+                            afficher_activite_totale_prenom(Prenom_csv_to_list, Prenom)
+                                                                             
+                        elif rep_recherhe_personne == 3:
+                            plus_polluante(Prenom, Prenom_csv_to_list)
 
-                 
-                    elif rep_recherhe_personne == 2:
-                        print("rien")
-
-                    elif rep_recherhe_personne == 3:
-                        print("")
-
-                    elif rep_recherhe_personne == 4:
-                        recherche_personne_en_cours = False
+                        elif rep_recherhe_personne == 4:
+                                Prenom = rechercher_une_personne(csv_to_list, liste_options_menu_Personne)
+                            
+                        elif rep_recherhe_personne == 5:
+                                recherche_personne_en_cours = False
                         
-                    elif rep_recherhe_personne == 5:
-                        recherche_personne_en_cours = False
-                        rep_menu_principal = ''
-                
-                    else:
-                        print("cette option n'existe pas")
-                except:
-                    print("cette option n'existe pas")
+                        else:
+                                print("cette option n'existe pas")
+                    except:
+                        print("erreur")
+                    input("Appuyer sur Entrée pour continuer")
 
-        elif rep_menu_principal == 2:
-            print("bleh2")
-        
-        elif rep_menu_principal == 3:
-            print("bleh3")
+            elif rep_menu_principal == 2:
+                print("bleh2")
+            
+            elif rep_menu_principal == 3:
+                print("bleh3")
 
-        elif rep_menu_principal == 4:
-            print("bleh4")
-        
-        elif rep_menu_principal == 5:
-            appli_running = False
-        
-        else:
-            appli_running = False
-
+            elif rep_menu_principal == 4:
+                print("bleh4")
+            
+            elif rep_menu_principal == 5:
+                appli_running = False
+        except:
+            print("cette option n'existe pas !")
+        input("Appuyer sur Entrée pour continuer")
+    print("Au revoir !")
 programme_principal()
 
 
