@@ -965,7 +965,7 @@ def cumul_emmissions(liste_activites):
         somme_emi += liste_activites[i][2]
     return somme_emi
 #print(cumul_emmissions(liste3))
-print(cumul_emmissions(liste6)/len(liste6))
+#print(cumul_emmissions(liste6)/len(liste6))
 
 def plus_longue_periode_emmissions_decroissantes(liste_activites):
     """
@@ -1221,5 +1221,5 @@ def cumul_temps_activite(liste_activites, co2_minute):
         duree = liste_activites[i][2]/duree
         duree_totale += duree
         duree = 0
-    return duree_totale
-#print(cumul_temps_activite(liste2, co2_minute))
+    return int(duree_totale)
+print(cumul_temps_activite(liste2, co2_minute))

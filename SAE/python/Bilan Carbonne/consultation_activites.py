@@ -145,7 +145,7 @@ def moyenne_act_personne(Prenom, Prenom_csv_to_list):
 
 def affichage_menu_date(date, list_opt_date):
     print("----------------------------------+")
-    print("Que c'est il passé le " + date + " ?|")
+    print("Que c'est t-il passé le " + date + " ?|")
     print("----------------------------------+")
     choix_options(list_opt_date)
 
@@ -179,6 +179,13 @@ def moyenne_act_date(date, date_csv_to_list):
     print("----------------------------------------")
     print("Il y a eu en moyenne " + str(bc.cumul_emmissions(date_csv_to_list)/len(date_csv_to_list)) + " grammes de Co2 émis le " + date)
     print("----------------------------------------")
+
+def duree_moyenne(Prenom, prenom_csv_to_list):
+    temp_moyen = bc.cumul_temps_activite(prenom_csv_to_list, bc.co2_minute)/len(prenom_csv_to_list)
+    temp_moyen = temp_moyen/60
+    print("-----------------------------------")
+    print(Prenom + "a consacré en moyenne " + str(temp_moyen) + " heures à ces activités")
+    print("-----------------------------------")
 
 
     
@@ -223,16 +230,17 @@ def programme_principal():
                             moyenne_act_personne(Prenom, Prenom_csv_to_list)
 
                         elif rep_recherhe_personne == 5:
-                            print("")
+                            duree_moyenne(Prenom, Prenom_csv_to_list)
+
                         elif rep_recherhe_personne == 6:
-                                Prenom = rechercher_une_personne(csv_to_list, liste_options_menu_Personne)
-                                Prenom_csv_to_list = bc.filtre_par_prenom(csv_to_list, Prenom)
+                            Prenom = rechercher_une_personne(csv_to_list, liste_options_menu_Personne)
+                            Prenom_csv_to_list = bc.filtre_par_prenom(csv_to_list, Prenom)
                             
                         elif rep_recherhe_personne == 7:
-                                recherche_personne_en_cours = False
+                            recherche_personne_en_cours = False
                         
                         else:
-                                print("cette option n'existe pas")
+                            print("cette option n'existe pas")
                     except:
                         print("erreur")
                     input("Appuyer sur Entrée pour continuer")
