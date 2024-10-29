@@ -829,6 +829,7 @@ liste6 = [
     ('Erika', '2024-09-29', 39.15, 'type1'),
     ('Erika', '2024-09-30', 55.68, 'type1')]
 
+
 # -----------------------------------------------------------------------------------------------------
 # Listes des fonctions à implémenter
 # -----------------------------------------------------------------------------------------------------
@@ -964,6 +965,7 @@ def cumul_emmissions(liste_activites):
         somme_emi += liste_activites[i][2]
     return somme_emi
 #print(cumul_emmissions(liste3))
+print(cumul_emmissions(liste6)/len(liste6))
 
 def plus_longue_periode_emmissions_decroissantes(liste_activites):
     """
@@ -1148,9 +1150,9 @@ def charger_activites(nom_fichier):
     fic = open(nom_fichier, "r")
     fic.readline()
     for ligne in fic:
-        carac = ligne.split(",")
+        carac = ligne.strip().split(",")
         res.append((carac[0], carac[1], float(carac[2]), carac[3]))
-    fic.close
+    fic.close()
     return res
 #print(charger_activites("emissions_CO2_septembre_2024.csv")) 
 
@@ -1163,11 +1165,12 @@ def sauver_activites(nom_fichier, liste_activites):
         liste_activites (list): la liste d'activités à sauvegarder
     """
     fic = open(nom_fichier, "w")
+    fic.write("Prénom,Date,Emissions_CO2 (g),Type_Activité" + "\n")
     for i in range(len(liste_activites)):
         ligne = str(liste_activites[i][0])+","+str(liste_activites[i][1])+","+str(liste_activites[i][2])+","+str(liste_activites[i][3])+"\n"
         fic.write(ligne)
     fic.close
-#print(sauver_activites("test.csv", liste1))
+#print(sauver_activites("SAE/python/Bilan Carbonne/bleh.csv", liste1))
 
 # ---------------------------------------------------------------------------------------------
 # Dictionnaire python (structure de données non-encore étudiée en cours)
