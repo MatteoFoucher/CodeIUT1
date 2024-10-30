@@ -5,18 +5,52 @@ import bilan_carbone as bc
 #liste_options_menu = ["Rechercher Une personne", "Rechercher une date", "Rechercher un type d'activité", "Effectuer une recherche précise", "Quitter"]
 #liste_options_menu_Personne = ["Son bilan carbonne", "Ses activités", "Son activité la plus polluante", "retour"]
 
-def charger_csv():
+def charger_csv(message):
     fichierchargé = False
     liste_fichier = []
     while fichierchargé == False:
         try: 
-            liste_fichier = bc.charger_activites(input("Entrez le nom du fichier csv que vous voulez charger (n'oubliez pas de mettre le .csv)" + "\n"))
+            liste_fichier = bc.charger_activites(input("Entrez le nom du " + message + " csv que vous voulez charger (n'oubliez pas de mettre le .csv)" + "\n"))
         except:
             print("Fichier introuvable, veuillez réessayer")
         else:
             fichierchargé = True
             print("Fichier chargé")
     return liste_fichier
+
+def sauver_liste(rep, list):
+    repOn = True
+    try:
+        while repOn:
+            if rep == 'o':
+                Nomfichier = input("Donnez un nom à votre fichier (sans oublier le .csv): ")
+                print("sauvegarde en cours...")
+                bc.sauver_activites(Nomfichier, list)
+                print("Liste sauvegardée avec succès (le fichier ce trouve dans le dossier courant)")
+                repOn = False
+            if rep == 'n':
+                print("")
+                repOn = False
+    except:
+        print("Erreur lors de la sauvegarde !")
+
+def fusion(fichier1, fichier2):
+    try:
+        fichier_fusionné = bc.fusionner_activites(fichier1, fichier2)
+        return fichier_fusionné
+    except:
+        print("Erreur lors de la fusion !")
+
+def sauver_fusion(fichier_fusionné):
+    try:
+        Nomfichier = input("Donnez un nom au fichier fusionné (sans oublier le .csv): ")
+        print("sauvegarde en cours...")
+        bc.sauver_activites(Nomfichier, fichier_fusionné)
+        print("Liste sauvegardée avec succès (le fichier ce trouve dans le dossier courant)")
+    except:
+        print("Erreur lors de la sauvegarde !")
+        
+
 
 def menu(titre, liste_options):
     try:
@@ -102,21 +136,6 @@ def afficher_activite_totale_prenom(Prenom_csv_to_list, Prenom):
     except:
         print("Erreur lors de l'affichage des activités")
 
-def sauver_liste(rep, list):
-    repOn = True
-    try:
-        while repOn:
-            if rep == 'o':
-                Nomfichier = input("Donnez un nom à votre fichier (sans oublier le .csv): ")
-                print("sauvegarde en cours...")
-                bc.sauver_activites(Nomfichier, list)
-                print("Liste sauvegardée avec succès (le fichier ce trouve dans le dossier courant)")
-                repOn = False
-            if rep == 'n':
-                print("")
-                repOn = False
-    except:
-        print("Erreur lors de la sauvegarde")
 
 def rechercher_date(csv_to_list):
     Dateexist = False
@@ -275,8 +294,9 @@ def bilan_carbonne_precis(precis_csv_to_list):
 
 def plus_polluante_precis(precis_csv_to_list):
     try:
+        act_plus_polluante = bc.max_emmission(precis_csv_to_list)
         print("--------------------------------")
-        print("L 'activité la plus polluante de cette liste à émise " + str(bc.max_emmission(precis_csv_to_list)) + " grammes de Co2")
+        print("L'activité la plus polluante de cette liste à émise " + str(act_plus_polluante[2]) + " grammes de Co2")
         print("--------------------------------")
     except:
         print("Erreur lors de l'affichage precis !")
@@ -284,7 +304,7 @@ def plus_polluante_precis(precis_csv_to_list):
 def moyenne_emission_precis(precis_csv_to_list):
     try:
         print("--------------------------------")
-        print("Ces activités ont emises en moyenne quotidiennement " + str(bc.cumul_emmissions(precis_csv_to_list)/len(precis_csv_to_list)) + " grammes de Co2")
+        print("Ces activités ont emises en moyenne " + str(bc.cumul_emmissions(precis_csv_to_list)/len(precis_csv_to_list)) + " grammes de Co2")
         print("--------------------------------")
     except:
         print("Erreur lors du calcul de la moyenne des émissions !")
@@ -301,21 +321,20 @@ def affichage_liste_act_precis(precis_csv_to_list):
 
 
 
-    
-
-
-
 
 # ici votre programme principal
 
 def programme_principal():
     appli_running = True
-    liste_options_menu = ["Rechercher Une personne", "Rechercher une date", "Rechercher un type d'activité", "Effectuer une recherche précise","Autres informations", "Affichier la liste des personnes", "Quitter"]
+    liste_options_menu = ["Rechercher Une personne", "Rechercher une date", "Rechercher un type d'activité", "Effectuer une recherche précise","Autres informations", "Afficher la liste des personnes", "Fusionner deux fichiers", "Charger un autre fichier", "Quitter"]
     liste_options_menu_Personne = ["Son bilan carbonne", "Ses activités", "Son activité la plus polluante", "La moyenne de ses émissions", "Le temps moyen consacré à ses activités", "Chercher une autre personne", "Retour"]
     Liste_options_menu_date = ["Bilan Carbonne de cette date", "Liste des Personnes à cette date", "Activité la plus polluante à cette date", "Moyenne des émissions", "Chercher une autre date", "Retour"]
     Liste_options_menu_type = ["Bilan carbonne de ces activité", "Activité la plus polluante de ce type", "Pourcentage des personnes pratiquant ce type d'activités", "Liste des personnes pratiquant ces activités", "Chercher un autre type", "Retour"]
     Liste_options_menu_recherche_precise = ["Bilan carbonne", "Activité la plus poulluante", "Moyenne des émissions", "Liste des activités", "Retour"]
-    csv_to_list = charger_csv()
+    Liste_options_menu_autres_informations = ["Plus longue période d'émissions décroissantes", "Evolution"]
+    csv_to_list = charger_csv("fichier")
+    fichier1 = None
+    fichier2 = None
     while appli_running:
         rep_menu_principal = menu("Bilan carbonne", liste_options_menu)
         try:
@@ -440,20 +459,24 @@ def programme_principal():
                 type_precis = rechercher_type(csv_to_list)
 
                 if Prenom_precis != None and date_precise != None and type_precis != None:
-                            affichage_dichotomique(Prenom_precis, date_precise, type_precis, csv_to_list)
-                            recherche_precise_en_cours = False
+                    affichage_dichotomique(Prenom_precis, date_precise, type_precis, csv_to_list)
+                    recherche_precise_en_cours = False
                 
                 if Prenom_precis == None:
-                    precis_csv_to_list = bc.filtre_par_prenom(precis_csv_to_list, type_precis)
-                    precis_csv_to_list = bc.filtre(precis_csv_to_list, 3, date_precise)                
-                
+                    precis_csv_to_list = bc.filtre(csv_to_list, 3, type_precis)
+                    precis_csv_to_list = bc.filtre(precis_csv_to_list, 1, date_precise)                
+                    if precis_csv_to_list == []:
+                        print("Aucune des activités ne vérifie les critères données")
                 if date_precise == None:
-                    precis_csv_to_list = bc.filtre_par_prenom(precis_csv_to_list, Prenom_precis)
+                    precis_csv_to_list = bc.filtre_par_prenom(csv_to_list, Prenom_precis)
                     precis_csv_to_list = bc.filtre(precis_csv_to_list, 3, type_precis)
-                
+                    if precis_csv_to_list == []:
+                        print("Aucune des activités ne vérifie les critères données")
                 if type_precis == None:
-                    precis_csv_to_list = bc.filtre_par_prenom(precis_csv_to_list, Prenom_precis)
-                    precis_csv_to_list = bc.filtre(precis_csv_to_list, 3, date_precise)
+                    precis_csv_to_list = bc.filtre_par_prenom(csv_to_list, Prenom_precis)
+                    precis_csv_to_list = bc.filtre(precis_csv_to_list, 1, date_precise)
+                    if precis_csv_to_list == []:
+                        print("Aucune des activités ne vérifie les critères données")
                 
                 while recherche_precise_en_cours:
                     affichage_recherche_precise(Liste_options_menu_recherche_precise)
@@ -467,6 +490,7 @@ def programme_principal():
 
                         elif rep_precis == 3:
                             moyenne_emission_precis(precis_csv_to_list)
+
                         elif rep_precis == 4:
                             affichage_liste_act_precis(precis_csv_to_list)
                             rep_sauver_precis = demander_oui_non("Voulez vous sauvegarder cette liste d'activités dans un fichier ? (O/n)")
@@ -483,12 +507,23 @@ def programme_principal():
 
 
             elif rep_menu_principal == 5:
-                print("bleh5")
+                autres_information_en_cours = True
+                while autres_information_en_cours:
+                    try:
+
                          
             elif rep_menu_principal == 6:
                 affichage_liste_personne(csv_to_list) 
-                
+
             elif rep_menu_principal == 7:
+                fichier1 = charger_csv("premier fichier")
+                fichier2 = charger_csv("deuxième fichier")
+                sauver_fusion(fusion(fichier1, fichier2))
+
+            elif rep_menu_principal == 8:
+                csv_to_list = charger_csv("fichier")
+                
+            elif rep_menu_principal == 9:
                 appli_running = False
             else:
                 print("cette option n'existe pas !")
