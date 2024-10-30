@@ -616,7 +616,7 @@ liste5 = [
     ('Lucas', '2024-09-28', 176.64, 'type3'),
     ('Lucas', '2024-09-29', 119.04, 'type3'),
     ('Lucas', '2024-09-30', 67.2, 'type3'),
-    ('Matéo', '2024-09-01', 70.08, 'type3'),
+    ('Matéo', '2024-09-01', 70.08, 'type3'), 
     ('Matéo', '2024-09-02', 18.24, 'type3'),
     ('Matéo', '2024-09-03', 93.12, 'type3'),
     ('Matéo', '2024-09-04', 37.44, 'type3'),
@@ -1125,16 +1125,18 @@ def recherche_activite_dichotomique(prenom, jour, type, liste_activites):
     Returns:
         tuple: l'activité recherchée
     """
+    act_recherche = (prenom, jour, 0, type)
     debut = 0
     fin = len(liste_activites)-1
     while debut <= fin:
         milieu = (debut+fin)//2
-        if liste_activites[milieu][0] < prenom or liste_activites[milieu][1] < jour or liste_activites[milieu][3] < type:
+        if est_avant(liste_activites[milieu], act_recherche):
             debut = milieu+1
-        elif liste_activites[milieu][0] > prenom or liste_activites[milieu][1] > jour or liste_activites[milieu][3] > type:
+        elif est_avant(act_recherche, liste_activites[milieu]):
             fin = milieu-1
         else:
             return liste_activites[milieu]
+#print(recherche_activite_dichotomique("Matéo", "2024-09-01", "type3", liste5))
 
 def charger_activites(nom_fichier):
     """
@@ -1222,4 +1224,4 @@ def cumul_temps_activite(liste_activites, co2_minute):
         duree_totale += duree
         duree = 0
     return int(duree_totale)
-print(cumul_temps_activite(liste2, co2_minute))
+#print(cumul_temps_activite(liste2, co2_minute))

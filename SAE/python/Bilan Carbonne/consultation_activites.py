@@ -60,7 +60,7 @@ def demander_oui_non(message):
     except:
         return None
     
-def rechercher_une_personne(csv_to_list, liste_options_menu_Personne):
+def rechercher_une_personne(csv_to_list):
     Prenomexist = False
     while Prenomexist == False:
         try:
@@ -68,6 +68,9 @@ def rechercher_une_personne(csv_to_list, liste_options_menu_Personne):
             if Prenom in bc.liste_des_personnes(csv_to_list):
                 Prenomexist = True
                 return Prenom
+            elif Prenom == "None":
+                Prenomexist = True
+                return None
             else: 
                 print("je ne connais pas la personne que vous cherchez, veuillez réessayer")
         except:
@@ -117,13 +120,18 @@ def sauver_liste(rep, list):
 
 def rechercher_date(csv_to_list):
     Dateexist = False
+    Liste_act_date = []
     while Dateexist == False:
         try:
             date = input("Entrez la date que vous recherchez (format AAAA-MM-JJ) : ")
-            Liste_act_date = bc.filtre(csv_to_list, 1, date)
+            if date != "None":
+                Liste_act_date = bc.filtre(csv_to_list, 1, date)
             if Liste_act_date != []:
                 Dateexist = True
                 return date
+            elif date == "None":
+                Dateexist = True
+                return None
             else:
                 print("je ne trouve pas la date que vous cherchez, veuillez réessayer")
         except:
@@ -162,6 +170,7 @@ def liste_des_personne_date(date, date_csv_to_list):
         print("-----------------------------------------------")
         liste_pers_date = bc.liste_des_personnes(date_csv_to_list)
         print(liste_pers_date)
+        print("---------------------------------------")
         return liste_pers_date
     except:
         print("Erreur lors de l'affichage des personnes")
@@ -184,8 +193,112 @@ def duree_moyenne(Prenom, prenom_csv_to_list):
     temp_moyen = bc.cumul_temps_activite(prenom_csv_to_list, bc.co2_minute)/len(prenom_csv_to_list)
     temp_moyen = temp_moyen/60
     print("-----------------------------------")
-    print(Prenom + "a consacré en moyenne " + str(temp_moyen) + " heures à ces activités")
+    print(Prenom + " a consacré en moyenne " + str(temp_moyen) + " heures à ces activités")
     print("-----------------------------------")
+
+def rechercher_type(type_csv_to_list):
+    typeexist = False
+    Liste_act_date = []
+    while typeexist == False:
+        try:
+            type = input("Entrez le type que vous recherchez : ")
+            if type != "None":
+                Liste_act_date = bc.filtre(type_csv_to_list, 3, type)
+            if Liste_act_date != []:
+                typeexist = True
+                return type
+            elif type == "None":
+                typeexist = True
+                return None
+            else:
+                print("je ne trouve pas le type que vous cherchez, veuillez réessayer")
+        except:
+            print("je ne trouve pas le type que vous cherchez, veuillez réessayer")
+
+def affichage_menu_type(type, menu_type):
+    print("----------------------------------------------------+")
+    print("Que voulez vous savoir sur les activités de " + type + " ? |")
+    print("----------------------------------------------------+")
+    choix_options(menu_type)
+
+def bilan_carbonne_type(type, type_csv_to_list):
+    print("-----------------------------")
+    print("Les activités de " + type + " on émise au total " + str(bc.cumul_emmissions(type_csv_to_list)) + " grammes de Co2")
+    print("-----------------------------")
+
+def plus_polluante_type(type, type_csv_to_list):
+    plus_polluante = bc.max_emmission(type_csv_to_list)
+    print("-----------------------------")
+    print("L'activité la plus polluante de " + type + " a émise " + str(plus_polluante[2]) + " grammes de Co2")
+    print("-----------------------------")
+
+def pourcentage_type(type, type_csv_to_list, csv_to_list):
+    try:
+        pourcentage = (len(type_csv_to_list)/len(csv_to_list))*100
+        print("-----------------------------")
+        print("Il y a " + str(pourcentage) + " % " + " de personne pratiquant des activités de " + type)
+        print("-----------------------------")
+    except:
+        print("Erreur lors du calcul de pourcentage")
+
+def affichage_liste_personnes_type(type, type_csv_to_list):
+    try:
+        print("Voici la liste des personnes pratiquant des activités de " + type)
+        print("---------------------------------------")
+        print(str(bc.liste_des_personnes(type_csv_to_list)))
+        print("---------------------------------------")
+    except:
+        print("Erreur lors de l'affichage des personnes")
+
+def affichage_dichotomique(Prenom, date, type, csv_to_list):
+    try:
+        activite_precise = bc.recherche_activite_dichotomique(Prenom, date, type, csv_to_list)
+        print("-------------------------------")
+        print(Prenom + " a émis " + str(activite_precise[2]) + " grammes de Co2 le " + date + " c'était une activité de " + type)
+        print("-------------------------------")
+    except:
+        print("Désolé mais cette activité n'existe pas !")
+
+def affichage_recherche_precise(Liste_options_menu_recherche_precise):
+    print("---------------------------------------------+")
+    print("Que voulez vous savoir sur cette recherche ? |")
+    print("---------------------------------------------+")
+    choix_options(Liste_options_menu_recherche_precise)
+
+def bilan_carbonne_precis(precis_csv_to_list):
+    try:
+        print("--------------------------------")
+        print("Ces activités ont émise au total " + str(bc.cumul_emmissions(precis_csv_to_list)) + " grammes de Co2")
+        print("--------------------------------")
+    except:
+        print("Erreur lors du bilan carbonne !")
+
+def plus_polluante_precis(precis_csv_to_list):
+    try:
+        print("--------------------------------")
+        print("L 'activité la plus polluante de cette liste à émise " + str(bc.max_emmission(precis_csv_to_list)) + " grammes de Co2")
+        print("--------------------------------")
+    except:
+        print("Erreur lors de l'affichage precis !")
+
+def moyenne_emission_precis(precis_csv_to_list):
+    try:
+        print("--------------------------------")
+        print("Ces activités ont emises en moyenne quotidiennement " + str(bc.cumul_emmissions(precis_csv_to_list)/len(precis_csv_to_list)) + " grammes de Co2")
+        print("--------------------------------")
+    except:
+        print("Erreur lors du calcul de la moyenne des émissions !")
+
+def affichage_liste_act_precis(precis_csv_to_list):
+    try:
+        print("Voici la liste des activités selon vos critères :")
+        print("-------------------------------------------------------")
+        print(precis_csv_to_list)
+        print("-------------------------------------------------------")
+    except:
+        print("Erreur lors de l'affichage de la liste !")
+
+
 
 
     
@@ -197,9 +310,11 @@ def duree_moyenne(Prenom, prenom_csv_to_list):
 
 def programme_principal():
     appli_running = True
-    liste_options_menu = ["Rechercher Une personne", "Rechercher une date", "Rechercher un type d'activité", "Effectuer une recherche précise", "Affichier la liste des personnes", "Quitter"]
+    liste_options_menu = ["Rechercher Une personne", "Rechercher une date", "Rechercher un type d'activité", "Effectuer une recherche précise","Autres informations", "Affichier la liste des personnes", "Quitter"]
     liste_options_menu_Personne = ["Son bilan carbonne", "Ses activités", "Son activité la plus polluante", "La moyenne de ses émissions", "Le temps moyen consacré à ses activités", "Chercher une autre personne", "Retour"]
     Liste_options_menu_date = ["Bilan Carbonne de cette date", "Liste des Personnes à cette date", "Activité la plus polluante à cette date", "Moyenne des émissions", "Chercher une autre date", "Retour"]
+    Liste_options_menu_type = ["Bilan carbonne de ces activité", "Activité la plus polluante de ce type", "Pourcentage des personnes pratiquant ce type d'activités", "Liste des personnes pratiquant ces activités", "Chercher un autre type", "Retour"]
+    Liste_options_menu_recherche_precise = ["Bilan carbonne", "Activité la plus poulluante", "Moyenne des émissions", "Liste des activités", "Retour"]
     csv_to_list = charger_csv()
     while appli_running:
         rep_menu_principal = menu("Bilan carbonne", liste_options_menu)
@@ -209,7 +324,7 @@ def programme_principal():
                     
             elif rep_menu_principal == 1:
                 recherche_personne_en_cours = True
-                Prenom = rechercher_une_personne(csv_to_list, liste_options_menu_Personne)
+                Prenom = rechercher_une_personne(csv_to_list)
                 Prenom_csv_to_list = bc.filtre_par_prenom(csv_to_list, Prenom)
                 while recherche_personne_en_cours:
                     affichage_menu_recherche_personne(Prenom, liste_options_menu_Personne)
@@ -220,8 +335,8 @@ def programme_principal():
                     
                         elif rep_recherhe_personne == 2:
                             afficher_activite_totale_prenom(Prenom_csv_to_list, Prenom)
-                            rep_sauver = demander_oui_non("Voulez vous sauvegarder la liste des activités de " + Prenom +  " dans un fichier ? (O/n)")
-                            sauver_liste(rep_sauver, Prenom_csv_to_list)
+                            rep_sauver_personne = demander_oui_non("Voulez vous sauvegarder la liste des activités de " + Prenom +  " dans un fichier ? (O/n)")
+                            sauver_liste(rep_sauver_personne, Prenom_csv_to_list)
 
                         elif rep_recherhe_personne == 3:
                             plus_polluante_personne(Prenom, Prenom_csv_to_list)
@@ -279,24 +394,106 @@ def programme_principal():
                     except:
                         print("erreur")
                     input("Appuyer sur Entrée pour continuer")
-
-
-                
-                
-                
             
             elif rep_menu_principal == 3:
-                print("bleh3")
+                recherche_type_en_cours = True
+                type = rechercher_type(csv_to_list)
+                type_csv_to_list = bc.filtre(csv_to_list, 3, type)
+                while recherche_type_en_cours:
+                    affichage_menu_type(type, Liste_options_menu_type)
+                    rep_type = demander_nombre("Entrez un nombre [1-", len(Liste_options_menu_type))
+                    try:
+                        if rep_type == 1:
+                            bilan_carbonne_type(type, type_csv_to_list)
+
+                        elif rep_type == 2:
+                            plus_polluante_type(type, type_csv_to_list)
+                       
+                        elif rep_type == 3:
+                            pourcentage_type(type, type_csv_to_list, csv_to_list)
+
+                        elif rep_type == 4:
+                            affichage_liste_personnes_type(type, type_csv_to_list)
+                            rep_sauver_type = demander_oui_non("Voulez vous sauvegarder la liste des activités de " + type +  " dans un fichier ? (O/n)")
+                            sauver_liste(rep_sauver_type, type_csv_to_list)
+                        
+                        elif rep_type == 5:
+                            type = rechercher_type(csv_to_list)
+                            type_csv_to_list = bc.filtre(csv_to_list, 3, type)
+
+                        elif rep_type == 6:
+                            recherche_type_en_cours = False
+                        
+                        else:
+                            print("Cette option n'existe pas !")
+                    except:
+                        print("Erreur")
+                    input("Appuyer sur Entrée pour continuer")
+
 
             elif rep_menu_principal == 4:
-                print("bleh4")
+                recherche_precise_en_cours = True
+                print("Veuillez renseigner au minimum 2 critères. (None si vous ne voulez pas renseigner un critère)")
+                print("---------------------------------------------------------------------------------------------")
+                Prenom_precis = rechercher_une_personne(csv_to_list)
+                date_precise = rechercher_date(csv_to_list)
+                type_precis = rechercher_type(csv_to_list)
+
+                if Prenom_precis != None and date_precise != None and type_precis != None:
+                            affichage_dichotomique(Prenom_precis, date_precise, type_precis, csv_to_list)
+                            recherche_precise_en_cours = False
+                
+                if Prenom_precis == None:
+                    precis_csv_to_list = bc.filtre_par_prenom(precis_csv_to_list, type_precis)
+                    precis_csv_to_list = bc.filtre(precis_csv_to_list, 3, date_precise)                
+                
+                if date_precise == None:
+                    precis_csv_to_list = bc.filtre_par_prenom(precis_csv_to_list, Prenom_precis)
+                    precis_csv_to_list = bc.filtre(precis_csv_to_list, 3, type_precis)
+                
+                if type_precis == None:
+                    precis_csv_to_list = bc.filtre_par_prenom(precis_csv_to_list, Prenom_precis)
+                    precis_csv_to_list = bc.filtre(precis_csv_to_list, 3, date_precise)
+                
+                while recherche_precise_en_cours:
+                    affichage_recherche_precise(Liste_options_menu_recherche_precise)
+                    rep_precis = demander_nombre("Entrez un nombre [1-", len(Liste_options_menu_recherche_precise))
+                    try:
+                        if rep_precis == 1:
+                            bilan_carbonne_precis(precis_csv_to_list)
+
+                        elif rep_precis == 2:
+                            plus_polluante_precis(precis_csv_to_list)
+
+                        elif rep_precis == 3:
+                            moyenne_emission_precis(precis_csv_to_list)
+                        elif rep_precis == 4:
+                            affichage_liste_act_precis(precis_csv_to_list)
+                            rep_sauver_precis = demander_oui_non("Voulez vous sauvegarder cette liste d'activités dans un fichier ? (O/n)")
+                            sauver_liste(rep_sauver_precis, precis_csv_to_list)
+
+                        elif rep_precis == 5:
+                            recherche_precise_en_cours = False
+                        
+                        else:
+                            print("Cette option n'existe pas")
+                    except:
+                        print("Erreur lors de la recherche précise")
+                    input("Appuyer sur Entrée pour continuer")
+
 
             elif rep_menu_principal == 5:
-                affichage_liste_personne(csv_to_list)          
+                print("bleh5")
+                         
             elif rep_menu_principal == 6:
+                affichage_liste_personne(csv_to_list) 
+                
+            elif rep_menu_principal == 7:
                 appli_running = False
+            else:
+                print("cette option n'existe pas !")
         except:
-            print("cette option n'existe pas !")
+            print("erreur !")
         input("Appuyer sur Entrée pour continuer")
     print("Au revoir !")
 programme_principal()
