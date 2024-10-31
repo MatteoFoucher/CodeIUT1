@@ -396,7 +396,7 @@ def programme_principal():
     Liste_options_menu_date = ["Bilan Carbonne de cette date", "Liste des Personnes à cette date", "Activité la plus polluante à cette date", "Moyenne des émissions", "Chercher une autre date", "Retour"]
     Liste_options_menu_type = ["Bilan carbonne de ces activité", "Activité la plus polluante de ce type", "Pourcentage des personnes pratiquant ce type d'activités", "Liste des personnes pratiquant ces activités", "Chercher un autre type", "Retour"]
     Liste_options_menu_recherche_precise = ["Bilan carbonne", "Activité la plus poulluante", "Moyenne des émissions", "Liste des activités", "Retour"]
-    Liste_options_menu_autres_informations = ["Plus longue période d'émissions décroissantes", "Evolution des émissions sur le mois de septembre", "Durée moyenne d'une activité", "Retour"]
+    Liste_options_menu_autres_informations = ["Plus longue période d'émissions décroissantes", "Durée moyenne d'une activité", "Retour"]
     csv_to_list = charger_csv("fichier")
     fichier1 = None
     fichier2 = None
@@ -581,12 +581,9 @@ def programme_principal():
                             plus_longue_emission_decroissante(csv_to_list)
                         
                         elif rep_autre_info == 2:
-                            print("")
-                        
-                        elif rep_autre_info == 3:
                             duree_moyenne_act(csv_to_list)
                         
-                        elif rep_autre_info == 4:
+                        elif rep_autre_info == 3:
                             autres_information_en_cours = False
                         
                         else:

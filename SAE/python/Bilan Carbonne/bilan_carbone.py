@@ -878,6 +878,7 @@ def annee(activite):
     else:
         liste = activite[1].split("-")
     return liste[0]
+
 def annee_mois(activite):
     """
     Retourne l'année et le mois d'une activité
