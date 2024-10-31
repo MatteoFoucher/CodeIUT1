@@ -105,7 +105,7 @@ def rechercher_une_personne(csv_to_list):
             if Prenom in bc.liste_des_personnes(csv_to_list):
                 Prenomexist = True
                 return Prenom
-            elif Prenom == "None":
+            elif Prenom == "None" or Prenom == "none":
                 Prenomexist = True
                 return None
             else: 
@@ -160,7 +160,7 @@ def rechercher_date(csv_to_list):
             if Liste_act_date != []:
                 Dateexist = True
                 return date
-            elif date == "None":
+            elif date == "None" or date == "none":
                 Dateexist = True
                 return None
             else:
@@ -253,7 +253,7 @@ def rechercher_type(type_csv_to_list):
             if Liste_act_date != []:
                 typeexist = True
                 return type
-            elif type == "None":
+            elif type == "None" or type == "none":
                 typeexist = True
                 return None
             else:
@@ -366,7 +366,23 @@ def affichage_menu_autres_informations(options_autres_informations):
     except:
         print("Erreur lors de l'affichage du menu autres nformations")
 
+def plus_longue_emission_decroissante(csv_to_list):
+    try:
+        print("--------------------------------------------------")
+        print("Il y a eu au maximum au cours du mois de septembre, " + str(bc.plus_longue_periode_emmissions_decroissantes(csv_to_list)) + " diminutions consécutives des émissions de Co2")
+        print("--------------------------------------------------")
+    except:
+        print("Erreur lors du calcul d'émissions décroiossantes")
 
+def duree_moyenne_act(csv_to_list):
+    try:
+        temp_moyen = bc.cumul_temps_activite(csv_to_list, bc.co2_minute)/len(csv_to_list)
+        temp_moyen = temp_moyen/60
+        print("-------------------------------------")
+        print("La duree moyenne d'une activité est de " + str(temp_moyen) + " heures")
+        print("-------------------------------------")
+    except:
+        print("Erreur lors du calcul de la duree moyenne")
 
 
 
@@ -416,7 +432,7 @@ def programme_principal():
                             duree_moyenne(Prenom, Prenom_csv_to_list)
 
                         elif rep_recherhe_personne == 6:
-                            Prenom = rechercher_une_personne(csv_to_list, liste_options_menu_Personne)
+                            Prenom = rechercher_une_personne(csv_to_list)
                             Prenom_csv_to_list = bc.filtre_par_prenom(csv_to_list, Prenom)
                             
                         elif rep_recherhe_personne == 7:
@@ -562,12 +578,16 @@ def programme_principal():
                     rep_autre_info = demander_nombre("Entrez un nombre [1-", len(Liste_options_menu_autres_informations))
                     try:
                         if rep_autre_info == 1:
+                            plus_longue_emission_decroissante(csv_to_list)
                         
                         elif rep_autre_info == 2:
+                            print("")
                         
                         elif rep_autre_info == 3:
+                            duree_moyenne_act(csv_to_list)
                         
                         elif rep_autre_info == 4:
+                            autres_information_en_cours = False
                         
                         else:
                             print("Cette option n'existe pas")
