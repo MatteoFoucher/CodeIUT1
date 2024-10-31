@@ -150,7 +150,7 @@ def test_recherche_activite_dichotomique():
 
 
 def test_charger_sauver():
- ...
+     assert bc.charger_activites("bleh.csv") == bc.liste5
 
 def test_temps_activite():
     assert bc.temps_activite(('Lucas', '2024-09-01', 67.2, 'type3'), bc.co2_minute) == 67.2/0.96
