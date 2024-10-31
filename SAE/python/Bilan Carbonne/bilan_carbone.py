@@ -798,7 +798,7 @@ liste5 = [
     ('Noah', '2024-09-30', 4.41, 'type4')
     ]
 liste6 = [
-    ('Erika', '2024-09-01', 34.8, 'type1'),
+    ('Erika', '2024-09-01', 34.8, 'type1'), 
     ('Erika', '2024-09-02', 20.01, 'type1'),
     ('Erika', '2024-09-03', 26.1, 'type1'),
     ('Erika', '2024-09-04', 17.4, 'type1'),
@@ -991,7 +991,7 @@ def plus_longue_periode_emmissions_decroissantes(liste_activites):
     if periode_act > periode_max:
         periode_max = periode_act
     return periode_max
-#print(plus_longue_periode_emmissions_decroissantes(liste6))
+print(plus_longue_periode_emmissions_decroissantes(liste1))
 
 def est_bien_triee(liste_activites):
     """
@@ -1064,7 +1064,7 @@ def liste_des_personnes(liste_activites):
             liste_personnes.append(liste_activites[i][0])
             prenom = liste_activites[i][0]
     return liste_personnes
-#print(liste_des_personnes(liste6))
+#print(liste_des_personnes(liste5))
 
 def fusionner_activites(liste_activites1, liste_activites2):
     """
@@ -1097,6 +1097,7 @@ def fusionner_activites(liste_activites1, liste_activites2):
             fusion.append(liste_activites1[i1])
             i1 += 1
     return fusion
+#print(fusionner_activites([('Lucas', '2024-09-01', 67.2, 'type3'), ('Lucas', '2024-09-01', 67.2, 'type3')], [('Lucas', '2024-09-01', 67.2, 'type3')]))
 
 def premiere_apparition_type(liste_activites, type_act):
     """
@@ -1157,7 +1158,7 @@ def charger_activites(nom_fichier):
         res.append((carac[0], carac[1], float(carac[2]), carac[3]))
     fic.close()
     return res
-#print(charger_activites("emissions_CO2_septembre_2024.csv")) 
+#print(charger_activites("bleh.csv")) 
 
 def sauver_activites(nom_fichier, liste_activites):
     """
@@ -1173,7 +1174,7 @@ def sauver_activites(nom_fichier, liste_activites):
         ligne = str(liste_activites[i][0])+","+str(liste_activites[i][1])+","+str(liste_activites[i][2])+","+str(liste_activites[i][3])+"\n"
         fic.write(ligne)
     fic.close
-#print(sauver_activites("SAE/python/Bilan Carbonne/bleh.csv", liste1))
+#print(sauver_activites("SAE/python/Bilan Carbonne/bleh.csv", liste5))
 
 # ---------------------------------------------------------------------------------------------
 # Dictionnaire python (structure de données non-encore étudiée en cours)

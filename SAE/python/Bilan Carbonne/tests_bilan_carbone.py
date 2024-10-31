@@ -80,6 +80,11 @@ def test_cumul_emmissions():
 def test_plus_longue_periode_emmissions_decroissantes():
     assert bc.plus_longue_periode_emmissions_decroissantes([]) == 0
     assert bc.plus_longue_periode_emmissions_decroissantes(bc.liste6) == 3
+    assert bc.plus_longue_periode_emmissions_decroissantes(bc.liste5) == 4
+    assert bc.plus_longue_periode_emmissions_decroissantes(bc.liste1) == 1
+    assert bc.plus_longue_periode_emmissions_decroissantes([('Erika', '2024-09-28', 76.56, 'type1'), ('Erika', '2024-09-28', 60, 'type1'), ('Erika', '2024-09-28', 55, 'type1')]) == 2
+    assert bc.plus_longue_periode_emmissions_decroissantes([('Erika', '2024-09-28', 76.56, 'type1')]) == 0
+    assert bc.plus_longue_periode_emmissions_decroissantes([('Erika', '2024-09-28', 76.56, 'type1'), ('Erika', '2024-09-28', 70, 'type1')]) == 1
     
 def test_est_bien_triee():
     assert bc.est_bien_triee([]) == True
@@ -98,6 +103,9 @@ def test_liste_des_types():
     assert bc.liste_des_types([('Lucas', '2024-09-01', 67.2, 'type3')]) == ['type3']
     assert bc.liste_des_types([('Lucas', '2024-09-01', 67.2, 'type3'), ('Lucas', '2024-09-02', 70.08, 'type3')]) == ['type3']
     assert bc.liste_des_types([('Lucas', '2024-09-01', 67.2, 'type4'), ('Lucas', '2024-09-02', 70.08, 'type3')]) == ['type4', 'type3']
+    assert bc.liste_des_types(bc.liste5) == ['type1', 'type2', 'type3', 'type4']
+    assert bc.liste_des_types(bc.liste1) == ['type1', 'type2', 'type3', 'type4']
+    assert bc.liste_des_types(bc.liste6) == ['type1']
 
 
 def test_liste_des_personnes():
@@ -105,6 +113,8 @@ def test_liste_des_personnes():
     assert bc.liste_des_personnes([('Lucas', '2024-09-01', 67.2, 'type3')]) == ['Lucas']
     assert bc.liste_des_personnes([('Lucas', '2024-09-01', 67.2, 'type3'), ('Lucas', '2024-09-02', 70.08, 'type3')]) == ['Lucas']
     assert bc.liste_des_personnes([('Lucas', '2024-09-01', 67.2, 'type3'), ('David', '2024-09-02', 70.08, 'type3')]) == ['Lucas', 'David']
+    assert bc.liste_des_personnes(bc.liste6) == ['Erika']
+    assert bc.liste_des_personnes(bc.liste5) == ['Anaëlle', 'Emrecan', 'Erika', 'Florian', 'Hugo', 'Ilan', 'Lucas', 'Matéo', 'Noah', 'Titouan', 'Anaëlle', 'Erika', 'Florian', 'Hugo', 'Lucas', 'Titouan', 'Hugo', 'Ilan', 'Lucas', 'Matéo', 'Titouan', 'Emrecan', 'Hugo', 'Lucas', 'Noah']
 
 
 def test_fusionner_activites():
@@ -113,20 +123,34 @@ def test_fusionner_activites():
     assert bc.fusionner_activites([('Lucas', '2024-09-02', 70.08, 'type3')], [('Lucas', '2024-09-01', 67.2, 'type3')]) == [('Lucas', '2024-09-01', 67.2, 'type3'), ('Lucas', '2024-09-02', 70.08, 'type3')]
     assert bc.fusionner_activites([('Lucas', '2024-09-01', 67.2, 'type3'), ('Lucas', '2024-09-02', 70.08, 'type3')], [('Lucas', '2024-09-03', 67.2, 'type3')]) == [('Lucas', '2024-09-01', 67.2, 'type3'), ('Lucas', '2024-09-02', 70.08, 'type3'), ('Lucas', '2024-09-03', 67.2, 'type3')]
     assert bc.fusionner_activites(bc.liste3, bc.liste4) == bc.liste2
+    assert bc.fusionner_activites(bc.liste3, []) == bc.liste3
+    assert bc.fusionner_activites([], bc.liste3) == bc.liste3
+    assert bc.fusionner_activites([('Lucas', '2024-09-01', 67.2, 'type3'), ('Lucas', '2024-09-01', 67.2, 'type3')], [('Lucas', '2024-09-01', 67.2, 'type3')]) == [('Lucas', '2024-09-01', 67.2, 'type3'), ('Lucas', '2024-09-01', 67.2, 'type3'), ('Lucas', '2024-09-01', 67.2, 'type3')]
+    
 
 
 def test_premiere_apparition_type():
     assert bc.premiere_apparition_type([], 'type1') == None
     assert bc.premiere_apparition_type([('Lucas', '2024-09-01', 67.2, 'type3')], 'type1') == None
     assert bc.premiere_apparition_type([('Lucas', '2024-09-01', 67.2, 'type3'), ('Lucas', '2024-09-02', 70.08, 'type3')], 'type3') == '2024-09-01'
+    assert bc.premiere_apparition_type(bc.liste5, "type1") == "2024-09-01"
+    assert bc.premiere_apparition_type(bc.liste5, "type2") == '2024-09-01'
+    assert bc.premiere_apparition_type(bc.liste5, "type3") == '2024-09-01'
+    assert bc.premiere_apparition_type(bc.liste5, "type4") == '2024-09-01'
+    assert bc.premiere_apparition_type(bc.liste5, '') == None
 
-
+    
 def test_recherche_activite_dichotomique():
     assert bc.recherche_activite_dichotomique('Lucas', '2024-09-01', 'type3', []) == None
+    assert bc.recherche_activite_dichotomique('', '', '', bc.liste5) == None
     assert bc.recherche_activite_dichotomique('Lucas', '2024-09-01', 'type3', [('Lucas', '2024-09-01', 67.2, 'type3'), ('Lucas', '2024-09-02', 70.08, 'type3')]) == ('Lucas', '2024-09-01', 67.2, 'type3')
+    assert bc.recherche_activite_dichotomique("Matéo", "2024-09-01", "type3", bc.liste5) == ('Matéo', '2024-09-01', 70.08, 'type3')
+    assert bc.recherche_activite_dichotomique('Erika', '2024-09-10', 'type1', bc.liste6) == ('Erika', '2024-09-10', 28.71, 'type1')
+    assert bc.recherche_activite_dichotomique('David', '2024-09-19', 'type3', bc.liste1) == None
+
 
 def test_charger_sauver():
-    ...
+ ...
 
 def test_temps_activite():
     assert bc.temps_activite(('Lucas', '2024-09-01', 67.2, 'type3'), bc.co2_minute) == 67.2/0.96
