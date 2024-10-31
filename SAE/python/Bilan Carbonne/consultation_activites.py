@@ -6,6 +6,15 @@ import bilan_carbone as bc
 #liste_options_menu_Personne = ["Son bilan carbonne", "Ses activités", "Son activité la plus polluante", "retour"]
 
 def charger_csv(message):
+    """
+    Charge un fichier csv et le converti en liste
+
+    Args:
+        message (str): le message à afficher
+
+    Returns:
+        list: le fichier csv chargé converti en liste
+    """
     fichierchargé = False
     liste_fichier = []
     while fichierchargé == False:
@@ -19,6 +28,12 @@ def charger_csv(message):
     return liste_fichier
 
 def sauver_liste(rep, list):
+    """Sauvegarde une liste dans un fichier csv si l'utilisateur l'a demandé
+
+    Args:
+        rep (str): réponse de l'utilisateur (o ou n) à la question : voulez vous sauvegarder ces données ?
+        list (list): La liste à sauvegarder en fichier csv
+    """
     repOn = True
     try:
         while repOn:
@@ -35,6 +50,15 @@ def sauver_liste(rep, list):
         print("Erreur lors de la sauvegarde !")
 
 def fusion(fichier1, fichier2):
+    """fusionne deux fichier csv convertis en listes en une liste
+
+    Args:
+        fichier1 (list): Un fichier csv converti en liste d'activité 
+        fichier2 (list): Un deuxième fichier csv converti en liste d'activité
+
+    Returns:
+        fichier_fusionné(list): La liste fusionnée
+    """
     try:
         fichier_fusionné = bc.fusionner_activites(fichier1, fichier2)
         return fichier_fusionné
@@ -42,6 +66,11 @@ def fusion(fichier1, fichier2):
         print("Erreur lors de la fusion !")
 
 def sauver_fusion(fichier_fusionné):
+    """Sauvegarde La liste fusionné donnée en paramètre dans un fichier csv
+
+    Args:
+        fichier_fusionn (list): une liste résultat de la fusion de deux listes
+    """
     try:
         Nomfichier = input("Donnez un nom au fichier fusionné (sans oublier le .csv): ")
         print("sauvegarde en cours...")
@@ -53,6 +82,15 @@ def sauver_fusion(fichier_fusionné):
 
 
 def menu(titre, liste_options):
+    """Affiche le menu principal de l'application et demande à l'utilisateur de choisir une option dans liste_options
+
+    Args:
+        titre (str): le titre de l'application
+        liste_options (list): La liste d'options du menu
+
+    Returns:
+        str: le numéro de l'option choisie par l'utilisateur
+    """
     try:
         affichage_menu_principal(titre, liste_options)
         rep = demander_nombre("Entrez votre choix [1-", len(liste_options))
@@ -61,6 +99,12 @@ def menu(titre, liste_options):
         return None
 
 def affichage_menu_principal(titre, liste_option):
+    """Affiche le menu princiâl de l'application
+
+    Args:
+        titre (str): le titre de l'application
+        liste_option (list): la liste d'options du menu principal
+    """
     try:
         print("+-----------------------------------------+")
         print("|Bienvenu sur l'application " + titre + "|")
@@ -73,6 +117,11 @@ def affichage_menu_principal(titre, liste_option):
         print("Erreur lors de l'affichage du menu principal")
 
 def choix_options(liste_options):
+    """Affiche une liste d'options
+
+    Args:
+        liste_options (list): Une liste d'options
+    """
     try:
         cpt = 1
         for i in range(len(liste_options)):
@@ -82,6 +131,15 @@ def choix_options(liste_options):
         print("Erreur lors du choix des options")
 
 def demander_nombre(message, borne_max):
+    """demande à l'utilisateur d'entrer un nombre dans le terminal
+
+    Args:
+        message (str): le message à afficher dans le terminal
+        borne_max (int): le nombre maximum que l'utilisateur peut entrer
+
+    Returns:
+        int: le numéro entré par l'utilisateur
+    """
     try:
         rep = int(input(message + str(borne_max) + "]" + "\n"))
 
@@ -91,11 +149,20 @@ def demander_nombre(message, borne_max):
         return None
 
 def demander_oui_non(message):
-    try:
-        rep = input((message))
-        return rep
-    except:
-        return None
+    repexist = True
+    while repexist:
+        try:
+            rep = input((message))
+            if rep == "o" or rep == "O":
+                repexist = False
+                return rep
+            elif rep == "n" or rep == "N":
+                repexist = False
+                return rep
+            else:
+                print("réponse inconnue, veuillez réessayer")
+        except:
+            print("réponse inconnue, veuillez réessayer")
     
 def rechercher_une_personne(csv_to_list):
     Prenomexist = False
