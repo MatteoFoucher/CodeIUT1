@@ -645,7 +645,7 @@ def duree_moyenne_act(csv_to_list):
 
 def programme_principal():
     appli_running = True
-    liste_options_menu = ["Rechercher Une personne", "Rechercher une date", "Rechercher un type d'activité", "Effectuer une recherche précise","Autres informations", "Afficher la liste des personnes", "Fusionner deux fichiers", "Charger un autre fichier", "Quitter"]
+    liste_options_menu = ["Rechercher Une personne", "Rechercher une date", "Rechercher un type d'activité", "Effectuer une recherche précise", "Autres informations", "Afficher la liste des personnes", "Fusionner deux fichiers", "Charger un autre fichier", "Quitter"]
     liste_options_menu_Personne = ["Son bilan carbonne", "Ses activités", "Son activité la plus polluante", "La moyenne de ses émissions", "Le temps moyen consacré à ses activités", "Chercher une autre personne", "Retour"]
     Liste_options_menu_date = ["Bilan Carbonne de cette date", "Liste des Personnes à cette date", "Activité la plus polluante à cette date", "Moyenne des émissions", "Chercher une autre date", "Retour"]
     Liste_options_menu_type = ["Bilan carbonne de ces activité", "Activité la plus polluante de ce type", "Pourcentage des personnes pratiquant ce type d'activités", "Liste des personnes pratiquant ces activités", "Chercher un autre type", "Retour"]

@@ -991,7 +991,7 @@ def plus_longue_periode_emmissions_decroissantes(liste_activites):
     if periode_act > periode_max:
         periode_max = periode_act
     return periode_max
-print(plus_longue_periode_emmissions_decroissantes(liste1))
+#print(plus_longue_periode_emmissions_decroissantes(liste1))
 
 def est_bien_triee(liste_activites):
     """
@@ -1226,4 +1226,4 @@ def cumul_temps_activite(liste_activites, co2_minute):
         duree_totale += duree
         duree = 0
     return int(duree_totale)
-#print(cumul_temps_activite(liste2, co2_minute))
+print(cumul_temps_activite([('Lucas', '2024-09-01', 67.2, 'type3'), ('Lucas', '2024-09-01', 67.2, 'type3')], co2_minute))
