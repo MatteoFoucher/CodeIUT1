@@ -1,5 +1,7 @@
 # TP8 B - Manipuler des listes, ensembles et dictionnaires
 troupeau = {"moutons":20, "poules":15, "vache":30, "âne":2}
+troupeau_de_perrette = {'veau':14, 'vache':7, 'poule':42}
+troupeau_de_jean = {'vache':12, 'cochon':17, 'veau':3}
 
 
 def total_animaux(troupeau):
@@ -15,20 +17,24 @@ def total_animaux(troupeau):
     for animal in troupeau.values():
         somme_troupeau+= animal
     return somme_troupeau
-print(total_animaux(troupeau))
+#print(total_animaux(troupeau))
 
 
 
 def tous_les_animaux(troupeau):
     """ Détermine l'ensemble des animaux dans un troupeau
 
-    Args:
+    Args:print()
         troupeau (dict): un dictionnaire modélisant un troupeau {nom_animaux: nombre}
 
     Returns:
         set: l'ensemble des animaux du troupeau
     """
-    ...
+    liste_animaux = [] 
+    for clés in troupeau.keys():
+        liste_animaux.append(clés)
+    return set(liste_animaux)
+#print(tous_les_animaux(troupeau))
 
 
 def specialise(troupeau):
@@ -41,7 +47,15 @@ def specialise(troupeau):
         bool: True si le troupeau contient 30 (ou plus) individus d'un même type d'animal,
         False sinon 
     """
-    ...
+    res = None
+    for animal in troupeau.values():
+        if animal >= 30:
+            res = True
+            return True
+        else: 
+            res = False
+    return res
+        
 
 
 def le_plus_represente(troupeau):
@@ -55,9 +69,17 @@ def le_plus_represente(troupeau):
         None si le troupeau est vide) 
     
     """
-    ...
+    max = 0
+    get_clé = None
+    
+    for clés, animal in troupeau.items():
+        if animal >= max:
+            max = animal
+            get_clé = clés
+    return get_clé
+#print(le_plus_represente(troupeau))
 
-
+print()
 def quantite_suffisante(troupeau):
     """ Vérifie si le troupeau contient au moins 5 individus de chaque type d'animal
 
@@ -68,7 +90,14 @@ def quantite_suffisante(troupeau):
         bool: True si le troupeau contient au moins 5 individus de chaque type d'animal
         False sinon    
     """
-    ...
+    res = None
+    for animal in troupeau.values():
+        if animal >= 5:
+            res = True
+        else:
+            return False
+    return res
+#print(quantite_suffisante())
 
 
 def reunion_troupeaux(troupeau1, troupeau2):
@@ -81,6 +110,15 @@ def reunion_troupeaux(troupeau1, troupeau2):
     Returns:
         dict: le dictionnaire modélisant la réunion des deux troupeaux    
     """
-    ...
+    get_value = None
+    for clé, animal in troupeau1.items():
+        if clé in troupeau2.keys():
+            get_value = troupeau2[clé]
+            animal += get_value
+            troupeau1[clé] = animal
+        else:
+            troupeau1[clé] = animal    
+    return troupeau1
+print(reunion_troupeaux(troupeau_de_perrette, troupeau_de_jean))
 
 
