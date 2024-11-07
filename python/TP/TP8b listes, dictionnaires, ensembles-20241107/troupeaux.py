@@ -1,5 +1,5 @@
 # TP8 B - Manipuler des listes, ensembles et dictionnaires
-troupeau = {"moutons":20, "poules":15, "vache":30, "âne":2}
+mon_troupeau = {"moutons":20, "poules":15, "vache":30, "âne":2}
 troupeau_de_perrette = {'veau':14, 'vache':7, 'poule':42}
 troupeau_de_jean = {'vache':12, 'cochon':17, 'veau':3}
 
@@ -110,15 +110,14 @@ def reunion_troupeaux(troupeau1, troupeau2):
     Returns:
         dict: le dictionnaire modélisant la réunion des deux troupeaux    
     """
+    troupeau3 = {}
     get_value = None
-    for clé, animal in troupeau1.items():
-        if clé in troupeau2.keys():
-            get_value = troupeau2[clé]
+    for clé, animal in troupeau2.items():
+        if clé in troupeau1.keys():
+            get_value = troupeau1[clé]
             animal += get_value
             troupeau1[clé] = animal
         else:
             troupeau1[clé] = animal    
     return troupeau1
-print(reunion_troupeaux(troupeau_de_perrette, troupeau_de_jean))
-
-
+print(reunion_troupeaux(mon_troupeau, troupeau_de_jean))

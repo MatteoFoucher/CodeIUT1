@@ -62,15 +62,23 @@ def test_reunion_troupeaux():
     troupeau_de_perrette = {'veau':14, 'vache':7, 'poule':42}
     troupeau_vide = dict()    
     mon_troupeau = {"moutons":20, "poules":15, "vache":30, "âne":2}
-    #assert troupeaux.reunion_troupeaux(troupeau_de_perrette, troupeau_vide) == troupeau_de_perrette
-    #assert troupeaux.reunion_troupeaux(troupeau_vide, troupeau_de_jean) == troupeau_de_jean
+    assert troupeaux.reunion_troupeaux(troupeau_de_perrette, troupeau_vide) == troupeau_de_perrette
+    mon_troupeau = {"moutons":20, "poules":15, "vache":30, "âne":2}
+    troupeau_de_perrette = {'veau':14, 'vache':7, 'poule':42}
+    troupeau_de_jean = {'vache':12, 'cochon':17, 'veau':3}
+    assert troupeaux.reunion_troupeaux(troupeau_vide, troupeau_de_jean) == troupeau_de_jean
+    mon_troupeau = {"moutons":20, "poules":15, "vache":30, "âne":2}
+    troupeau_de_perrette = {'veau':14, 'vache':7, 'poule':42}
+    troupeau_de_jean = {'vache':12, 'cochon':17, 'veau':3}
     assert troupeaux.reunion_troupeaux(troupeau_de_perrette, troupeau_de_jean) == {'vache':12+7, 'cochon':17, 'veau':3+14, 'poule':42}
-    assert troupeau_de_jean == {'vache':12, 'cochon':17, 'veau':3}
-    assert troupeau_de_perrette == {'veau':14, 'vache':7, 'poule':42}
-    #assert troupeaux.reunion_troupeaux(troupeau_de_perrette, mon_troupeau) == ...
-    #assert troupeaux.reunion_troupeaux(mon_troupeau, troupeau_de_jean) == ...
-    assert troupeau_de_jean == {'vache':12, 'cochon':17, 'veau':3}
-    assert troupeau_de_perrette == {'veau':14, 'vache':7, 'poule':42}
+    mon_troupeau = {"moutons":20, "poules":15, "vache":30, "âne":2}
+    troupeau_de_perrette = {'veau':14, 'vache':7, 'poule':42}
+    troupeau_de_jean = {'vache':12, 'cochon':17, 'veau':3}
+    assert troupeaux.reunion_troupeaux(troupeau_de_perrette, mon_troupeau) == {'veau': 14, 'vache': 37, 'poule': 42, 'moutons': 20, 'poules': 15, 'âne': 2}
+    mon_troupeau = {"moutons":20, "poules":15, "vache":30, "âne":2}
+    troupeau_de_perrette = {'veau':14, 'vache':7, 'poule':42}
+    troupeau_de_jean = {'vache':12, 'cochon':17, 'veau':3}
+    assert troupeaux.reunion_troupeaux(mon_troupeau, troupeau_de_jean) == {'moutons': 20, 'poules': 15, 'vache': 42, 'âne': 2, 'cochon': 17, 'veau': 3}
 
 
 
