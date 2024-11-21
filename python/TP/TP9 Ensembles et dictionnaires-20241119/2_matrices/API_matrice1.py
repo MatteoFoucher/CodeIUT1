@@ -1,4 +1,5 @@
 """ Matrices : API n 1 """
+la_matrice = (3, 4,[10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21])
 
 
 def matrice(nb_lignes, nb_colonnes, valeur_par_defaut):
@@ -12,7 +13,13 @@ def matrice(nb_lignes, nb_colonnes, valeur_par_defaut):
     Returns:
         une nouvelle matrice qui contient la valeur par défaut dans chacune de ses cases
     """
-    ...
+    matrice = (nb_lignes, nb_colonnes, [])
+    for i in range(nb_lignes*nb_colonnes):
+        matrice[2].append(valeur_par_defaut)
+    return matrice
+#print(matrice(6,3,4))
+
+    
 
 
 
@@ -29,7 +36,10 @@ def set_val(la_matrice, ligne, colonne, nouvelle_valeur):
     Returns:
         None
     """
-    ...
+    indice = (ligne*la_matrice[1]+colonne)
+    la_matrice[2][indice] = nouvelle_valeur
+    return la_matrice
+print(set_val(la_matrice, 2, 1, 58))
 
 
 def get_nb_lignes(la_matrice):
@@ -41,8 +51,11 @@ def get_nb_lignes(la_matrice):
     Returns:
         int : le nombre de lignes de la matrice
     """
-    ...
-
+    if la_matrice == ():
+        return None
+    else:
+        return la_matrice[0]
+#print(get_nb_lignes(()))
 
 def get_nb_colonnes(la_matrice):
     """permet de connaître le nombre de colonnes d'une matrice
@@ -53,7 +66,11 @@ def get_nb_colonnes(la_matrice):
     Returns:
         int : le nombre de colonnes de la matrice
     """
-    ...
+    if la_matrice == ():
+        return None
+    else:
+        return la_matrice[1]
+#print(get_nb_colonnes((6, 3, [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4])))
 
 
 def get_val(la_matrice, ligne, colonne):
@@ -68,8 +85,9 @@ def get_val(la_matrice, ligne, colonne):
     Returns:
         la valeur qui est dans la case située à la ligne et la colonne spécifiées
     """
-    ...
-
+    indice = (ligne*get_nb_colonnes(la_matrice)+colonne)
+    return la_matrice[2][indice]
+#print(get_val(la_matrice, 2, 1))
 # Fonctions pour l'affichage
 
 def affiche_ligne_separatrice(la_matrice, taille_cellule=4):
@@ -119,7 +137,8 @@ def charge_matrice_str(nom_fichier):
     Returns:
         une matrice de str
     """
-    ...
+    matrice = []
+    fic = open()
 
 
 def sauve_matrice(la_matrice, nom_fichier):
