@@ -11,6 +11,7 @@ drop table COMMANDE;
 drop table ARTICLE;
 drop table CLIENT;
 drop table POINTDEDISTRIBUTION;
+purge recyclebin;
 
 create table POINTDEDISTRIBUTION(
     refPointDist number(5),
@@ -44,14 +45,16 @@ create table COMMANDE(
     NumCom number(5),
     DateCom date,
     codeCl number(5),
-    constraint CleCOMMANDE PRIMARY KEY (NumCom)
+    constraint CleCOMMANDE PRIMARY KEY (NumCom),
+    constraint CLIENTEXIST FOREIGN KEY (CodeCl) REFERENCES CLIENT (codeCl)
 );
 
 create table COLIS(
     Numcom number(5),
     NumColis number(5),
     indiceRetrait varchar2(20),
-    constraint CleCOLIS PRIMARY KEY (NumCom,NumColis)
+    constraint CleCOLIS PRIMARY KEY (NumCom,NumColis),
+    constraint COMEXIST FOREIGN KEY(Numcom) REFERENCES COMMANDE(NumCom)
 );
 
 create table EXPEDIER(
@@ -60,12 +63,17 @@ create table EXPEDIER(
     RefArt number(5),
     qteExp number(5),
     qteAcc number(5),
-    constraint CleEXPEDIER PRIMARY KEY (NumCom,NumColis,RefArt)
+    constraint CleEXPEDIER PRIMARY KEY (NumCom,NumColis,RefArt),
+    constraint COLISEXIST FOREIGN KEY(NumColis,NumCom) REFERENCES COLIS(NumCom,NumColis),
+    constraint  ARTICLEEXIST FOREIGN KEY(RefArt) REFERENCES ARTICLE(RefArt)
 );
 
 create table CONTENIR(
     numCom number(5),
     RefArt number(5),
     qteCom number(5),
-    constraint CleCONTENIR PRIMARY KEY (NumCom,RefArt)
+    constraint CleCONTENIR PRIMARY KEY (NumCom,RefArt),
+    constraint CONTENIRCOMEXIST FOREIGN KEY(NumCom) REFERENCES COMMANDE(NumCom),
+    constraint ARTICLEEXIST FOREIGN KEY(RefArt) REFERENCES ARTICLE(RefArt)
+
 );
