@@ -39,7 +39,7 @@ def set_val(la_matrice, ligne, colonne, nouvelle_valeur):
     indice = (ligne*la_matrice[1]+colonne)
     la_matrice[2][indice] = nouvelle_valeur
     return la_matrice
-print(set_val(la_matrice, 2, 1, 58))
+#print(set_val(la_matrice, 2, 1, 58))
 
 
 def get_nb_lignes(la_matrice):
@@ -138,7 +138,19 @@ def charge_matrice_str(nom_fichier):
         une matrice de str
     """
     matrice = []
-    fic = open()
+    fic = open(nom_fichier, "r")
+    nb_ligne = 0
+    nb_colonne = 0
+    for ligne in fic:
+        carac = ligne.split(",")
+        carac.pop()
+        matrice.append(carac)
+        nb_ligne +=1
+    fic.close()
+    nb_colonne = len(matrice[0])
+    matrice_finale = (nb_ligne, nb_colonne, matrice)
+    return matrice_finale
+#print(charge_matrice_str("python/TP/TP9 Ensembles et dictionnaires-20241119/2_matrices/matrice.csv"))
 
 
 def sauve_matrice(la_matrice, nom_fichier):
@@ -152,4 +164,8 @@ def sauve_matrice(la_matrice, nom_fichier):
     Returns:
         None
     """
-    ...
+    fic = open(nom_fichier, "w")
+    for i in range(len(la_matrice)):
+        fic.write(ligne)
+    fic.close
+#print(sauve_matrice(la_matrice, "bleh.csv"))
