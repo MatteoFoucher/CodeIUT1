@@ -13,7 +13,7 @@ def quel_guichet(mqrf, guichet):
     Returns:
         str: le nom du guichet qui finit par donner le formulaire A-38
     """
-    ...
+    
 
 
 def quel_guichet_v2(mqrf, guichet):
