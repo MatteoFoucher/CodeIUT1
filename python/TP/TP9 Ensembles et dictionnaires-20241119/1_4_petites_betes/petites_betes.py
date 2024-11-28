@@ -116,6 +116,7 @@ def famille_la_plus_representee(pokedex):
 # ==========================
 # Petites bêtes (la suite)
 # ==========================
+mon_pokedex = {"Bulbizarre": {"Plante", "Poison"} ,"Aeromite" : {"Poison", "Insecte"} ,"Abo" : {"Poison"}}
 
 
 def toutes_les_familles_v2(pokedex):
@@ -128,7 +129,12 @@ def toutes_les_familles_v2(pokedex):
     Returns:
         set: l'ensemble des familles représentées dans le pokedex
     """
-    
+    familles = set()
+    for famille in pokedex.values():
+        for types in famille:
+            familles.add(types)
+    return familles
+#print(toutes_les_familles_v2(mon_pokedex))
 
 def nombre_pokemons_v2(pokedex, famille):
     """calcule le nombre de pokemons d'une certaine famille dans un pokedex
@@ -141,7 +147,7 @@ def nombre_pokemons_v2(pokedex, famille):
     Returns:
         int: le nombre de pokemons d'une certaine famille dans un pokedex
     """
-    ...
+    
 
 def frequences_famille_v2(pokedex):
     """Construit le dictionnaire de fréqeunces des familles d'un pokedex
