@@ -147,10 +147,15 @@ def nombre_pokemons_v2(pokedex, famille):
     Returns:
         int: le nombre de pokemons d'une certaine famille dans un pokedex
     """
-    
+    nombre_poke_famille = 0
+    for type in pokedex.values():
+        if famille in type:
+            nombre_poke_famille += 1
+    return nombre_poke_famille
+print(nombre_pokemons_v2(mon_pokedex, "Poison"))
 
 def frequences_famille_v2(pokedex):
-    """Construit le dictionnaire de fréqeunces des familles d'un pokedex
+    """Construit le dictionnaire de fréquences des familles d'un pokedex
 
     Args:
         pokedex (dict): un dictionnaire dont les clés sont les noms de pokemons et la
@@ -160,7 +165,9 @@ def frequences_famille_v2(pokedex):
         dict: un dictionnaire dont les clés sont le nom de familles (str) et la valeur
         associée est le nombre de représentants de la famille (int)
     """
-    ...
+    freq_famille = dict()
+    for famille in pokedex.values():
+        
 
 def dico_par_famille_v2(pokedex):
     """Construit un dictionnaire dont les les clés sont le nom de familles (str)
