@@ -81,7 +81,6 @@ def dico_par_famille(pokedex):
     for i in range(len(pokedex)):
         if pokedex[i][1] in dict_famille.keys():
             dict_famille[pokedex[i][1]].add(pokedex[i][0])
-            nom_pokemon = set()
         else:
             nom_pokemon.add(pokedex[i][0])
             dict_famille[pokedex[i][1]] = nom_pokemon
@@ -152,7 +151,7 @@ def nombre_pokemons_v2(pokedex, famille):
         if famille in type:
             nombre_poke_famille += 1
     return nombre_poke_famille
-print(nombre_pokemons_v2(mon_pokedex, "Poison"))
+#print(nombre_pokemons_v2(mon_pokedex, "Poison"))
 
 def frequences_famille_v2(pokedex):
     """Construit le dictionnaire de fréquences des familles d'un pokedex
@@ -167,7 +166,13 @@ def frequences_famille_v2(pokedex):
     """
     freq_famille = dict()
     for famille in pokedex.values():
-        
+        for type in famille:
+            if type in freq_famille.keys():
+                freq_famille[type] += 1
+            else:
+                freq_famille[type] = 1
+    return freq_famille
+#print(frequences_famille_v2(mon_pokedex))
 
 def dico_par_famille_v2(pokedex):
     """Construit un dictionnaire dont les les clés sont le nom de familles (str)
@@ -182,7 +187,20 @@ def dico_par_famille_v2(pokedex):
         dict: un dictionnaire dont les clés sont le nom de familles (str) et la valeur associée est
         l'ensemble (set) des noms des pokemons de cette famille dans le pokedex
     """
-    ...
+    dico_famille = dict()
+    poke_courant = set()
+    for poke, famille in pokedex.items():
+        for type in famille:
+            if type in dico_famille.keys(): 
+                dico_famille[type].add(poke)
+            else:
+                poke_courant.add(poke)
+                dico_famille[type] = poke_courant
+                poke_courant = set()
+    return dico_famille
+#print(dico_par_famille_v2(mon_pokedex))
+
+
 
 def famille_la_plus_representee_v2(pokedex):
     """détermine le nom de la famille la plus représentée dans le pokedex
@@ -194,4 +212,6 @@ def famille_la_plus_representee_v2(pokedex):
     Returns:
         str: le nom de la famille la plus représentée dans le pokedex
     """
-    ...
+    famille_plus_represente = frequences_famille_v2(pokedex)
+    return max(famille_plus_represente)
+#print(famille_la_plus_representee_v2(mon_pokedex))
